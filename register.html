@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+
+    <head>
+       
+        <title>REGISTRATION PAGE </title>
+       <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        
+         
+          <style>
+             body{padding : 10px 50px ;}
+             .formdesign{
+                 font-size : 20px;
+                 
+             }
+             </style>
+             
+    </head>
+
+   <body >    
+      <div style ="background-color:powderblue;"> <img src="newnew.jpg"> </div>
+    <div style = "background-color:powderblue">
+             <label for ="email">Email</label>
+              <input class="form-control" type="email" size="10" id="email" placeholder="Enter email" name="email">
+            <label for ="password">Password</label>
+          <input  class="form-control" type="password" size="10" id="password" placeholder="Enter pin here" name="password">
+                   
+   
+              <button class="btn btn-info" type= "submit" id="Login">Login</button> <br>
+   </div>
+       
+        <p id="name" > </p><br>
+            <p id="phonenumber" > </p>  <br> 
+            <p id="add1" > </p>   <br>
+                <p id="vax" > </p>   <br>
+                    <p id="vehicle" > </p>   <br>
+                        <p id="cost" > </p>   
+                          
+             <br>
+     <div style ="background-color:powderblue;">    
+             <p> (if not registered till now) <p>
+                        <a href="vax.html" class="btn btn-info" role="button" >book slot</a> 
+                                    <a href="reciept.html" class="btn btn-info" role="button" >APPOINTMENT INFORMATION</a> 
+                <br><br> 
+     </div>       
+     
+ <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase.js"></script>
+ <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyDkPXjS5WqMFqyLEJ3jKkL30xfH8aZkKDM",
+    authDomain: "ntccsem4.firebaseapp.com",
+    databaseURL: "https://ntccsem4-default-rtdb.firebaseio.com",
+    projectId: "ntccsem4",
+    storageBucket: "ntccsem4.appspot.com",
+    messagingSenderId: "380071121842",
+    appId: "1:380071121842:web:f0231c147df23523918aab",
+    measurementId: "G-2BS3T8217M"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+ var firebaseref = firebase.database().ref("User");
+
+$("\#Login").click(function(){
+    var email= document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    
+    firebaseref.on("value",function(snapshot){
+        var data = snapshot.val();
+       for (let i in data )
+       if(email == data[i].email_Id)
+   {
+       var rname = data[i].name;
+       var rcost= data[i].cost;
+       var raddress = data[i].address;
+       var rphonenumber = data[i].phonenumber;
+       var raddress2 = data[i].vaccination_center;
+          var rvehicle = data[i].vehicle;
+            sessionStorage.setItem("rcost",rcost);
+              sessionStorage.setItem("rvehicle",rvehicle);
+            sessionStorage.setItem("raddress",raddress);
+       sessionStorage.setItem("raddress2",raddress2);
+         sessionStorage.setItem("rphonenumber",rphonenumber);
+     sessionStorage.setItem("rname",rname);
+        document.getElementById("name").innerHTML = rname;
+   }
+      
+    });
+});
+
+       
+ 
+ 
+  
+</script>
+
+ 
+</body>
