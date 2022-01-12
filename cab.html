@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>CAB BOOKING</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body style ="background-color:lightsteelblue;">
+        <div> SELECT A CAR FOR RENTING   </div> <br><br>
+        <div style ="background-color:blueviolet;">
+        <p>RATE CARD   </p><br><br><br>
+        <p> SWIFT Dzire   : one way -(1980)    two way -(3600) </p>
+        <p> TOYOTA COROLA : one way - (1650)    two way -(3000)</p>
+        <p> SWIFT         : one way -(1450)   two way -(2800)</p> 
+        <p> MARUTI SANTRO : one way -(1100)    two way -(2000)</p>
+        </div>
+        <div><p> VEHICLE <p>
+         
+               
+        <input type="checkbox" id="vehicle" value="toyota_corola"/>toyota corola <br>
+        <input type="checkbox" id="vehicle" value="maruti_santro"/>maruti santro <br>
+        <input type="checkbox" id="vehicle" value=" swift"/>swift  <br>
+        <input type="checkbox" id="vehicle" value="swift_Dzire"/>swift Dzire <br>
+        </div>
+        <div>select your cab preferences </div>
+        
+        <div><p> one way( will include 10 percent pickup charge  ) or two way   <p>
+        <input type="checkbox" id="way" value="oneway"/>one way <br>
+        <input type="checkbox" id="way" value="twoway"/>two way  <br>
+      
+        </div>
+        
+        <div>
+             <label for ="email">Email</label>
+            <input type="email" id ="email"><br>
+            <label for ="password">Password</label>
+            <input type="password" id ="password"><br>
+         
+         <button type= "submit" id="searchbtn">Submit</button> <br>
+         
+             <p id="name" > </p><br>
+            <p id="phonenumber" > </p>  <br> 
+            <p id="add1" > </p>   <br>
+             <p id="vax" > </p>   <br>
+            <p id="vehicle" > </p>   <br>
+             <p id="cost" > </p>   
+    
+                          
+             <br>
+        </div>     
+ <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase.js"></script>
+ <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyDkPXjS5WqMFqyLEJ3jKkL30xfH8aZkKDM",
+    authDomain: "ntccsem4.firebaseapp.com",
+    databaseURL: "https://ntccsem4-default-rtdb.firebaseio.com",
+    projectId: "ntccsem4",
+    storageBucket: "ntccsem4.appspot.com",
+    messagingSenderId: "380071121842",
+    appId: "1:380071121842:web:f0231c147df23523918aab",
+    measurementId: "G-2BS3T8217M"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+ 
+      
+
+            $("\#searchbtn").click(function () 
+        {
+var vehicle = $('#vehicle').val();
+var way = $('#way').val();
+  var cost= "0";       
+ if (vehicle=="toyota_corola" && way=="two_way")
+ {cost = "3000"; }
+ else if (vehicle=="toyota_corola" && way=="one_way")
+ {cost ="1650";}
+ else  if (vehicle=="maruti_santro" && way=="two_way")
+  {cost = "2000";}
+   else if (vehicle=="maruti_santro" && way=="one_way")
+   {cost = "1100";}
+   else if (vehicle=="swift" && way=="two_way")
+    {cost = "2800";}
+     else if (vehicle=="swift" && way=="one_way")
+     {cost = "1540";}
+    else if (vehicle=="swift_Dzire" && way=="two_way") 
+    {cost = "3600"}     
+       else (vehicle=="swift_Dzire" && way=="one_way")
+         {cost="1980";}
+         
+   
+ 
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+  
+    var userid = user.uid;
+  
+  }
+     var email = document.getElementById('email').value;
+       var password = document.getElementById('password').value;
+ 
+   var phonenumber = sessionStorage.getItem("phonenumber");  
+   var address = sessionStorage.getItem("address");
+   var address2 = sessionStorage.getItem( "address2");
+      var name = sessionStorage.getItem("name");
+      var gk = cost;
+      var vv = vehicle;
+        firebase.auth().createUserWithEmailAndPassword(email ,password).then(function(){
+          firebase.database().ref("User/"+userid).set({
+              email_Id : email,
+              Password : password,
+              user_Id :userid,
+              address: address,
+          phonenumber: phonenumber,
+          vaccination_center :address2,
+          cost: gk ,
+          name:name,
+      vehicle: vv,});
+       
+    });
+            document.getElementById("name").innerHTML = name;
+        document.getElementById("phonnumber").innerHTML = phonenumber;
+           document.getElementById("add1").innerHTML = address;
+              document.getElementById("vax").innerHTML = address2;
+                 document.getElementById("vehicle").innerHTML = vv;
+                    document.getElementById("cost").innerHTML = gk` `;
+        });
+    });
+</script>
+    </body>
+</html>
